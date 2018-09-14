@@ -56,8 +56,8 @@ helpme () {
 	echo "        r|rdp"
 	echo "            e|enable"
 	echo "            d|disable"
-	echo "    s|skeleton"
-	echo "        archive.tgz"
+	echo "    t|template"
+	echo "        template.tgz"
 	echo "    x|rootshell"
 	echo "        chroot"                    
 	echo "    h|help"
@@ -70,21 +70,29 @@ todo () {
 
 mount_image () {
 	mkdir -p $AIC_MNT
-	IMG_DEV=`losetup -f --show -P $AIC_IMG`
-	IMG_PART="$IMG_DEV"p1
-	mount -t ext4 "$IMG_PART" "$AIC_MNT"
+	
+	if [ "$AIC_IMG" != "template" ]; then
+		IMG_DEV=`losetup -f --show -P $AIC_IMG`
+		IMG_PART="$IMG_DEV"p1
+		mount -t ext4 "$IMG_PART" "$AIC_MNT"
+	fi
 }
 
 unmount_image () {
-	fuser -k -9 "$AIC_MNT"
 	sync
-	umount -f "$AIC_MNT"
-	losetup -d "$IMG_DEV"
+	
+	if [ "$AIC_IMG" != "template" ]; then
+		sleep 2
+		fuser -k -9 "$AIC_MNT"
+		umount -f "$AIC_MNT"
+		losetup -d "$IMG_DEV"
+	fi
 }
 
 set_hostname () {
 	mount_image
 	
+	mkdir -p "$AIC_MNT"/etc
 	CURH=`cat "$AIC_MNT"/etc/hostname`
 	echo "$AIC_ARG1" > "$AIC_MNT"/etc/hostname
 	NEWH=`cat "$AIC_MNT"/etc/hostname`
@@ -97,6 +105,7 @@ set_hostname () {
 set_ethernet_dhcp () {
 	mount_image
 	
+	mkdir -p "$AIC_MNT"/etc/NetworkManager/system-connections
 	NMCONF=`cat lib/ethernet-dhcp.tmpl`
 	echo $NMCONF > "$AIC_MNT"/etc/NetworkManager/system-connections/ethernet
 	chmod 600 "$AIC_MNT"/etc/NetworkManager/system-connections/ethernet
@@ -108,15 +117,22 @@ set_ethernet_dhcp () {
 
 set_ethernet_static () {
 	mount_image
-	echo "e-static"
+
+	mkdir -p "$AIC_MNT"/etc/NetworkManager/system-connections
+	NMCONF=`cat lib/ethernet-static.tmpl | sed -e "s/TMPLIP/$AIC_ARG2/g" -e "s/TMPLMASK/$AIC_ARG3/g" -e "s/TMPLGW/$AIC_ARG4/g" -e "s/TMPLDNS/$AIC_ARG5/g" -e "s/TMPLSEARCH/$AIC_ARG6/g"`
+	echo $NMCONF > "$AIC_MNT"/etc/NetworkManager/system-connections/ethernet
+	chmod 600 "$AIC_MNT"/etc/NetworkManager/system-connections/ethernet
+	
+	echo "ethernet network with ip $AIC_ARG2 active for image: $AIC_IMG"
+	
 	unmount_image
 }
 
 set_wifi_dhcp () {
 	mount_image
 	
+	mkdir -p "$AIC_MNT"/etc/NetworkManager/system-connections
 	NMCONF=`cat lib/wifi-dhcp.tmpl | sed -e "s/TMPLSSID/$AIC_ARG2/g" -e "s/TMPLCRYPTO/$AIC_ARG3/g" -e "s/TMPLKEY/$AIC_ARG4/g"`
-	
 	echo $NMCONF > "$AIC_MNT"/etc/NetworkManager/system-connections/wifi
 	chmod 600 "$AIC_MNT"/etc/NetworkManager/system-connections/wifi
 	
@@ -127,7 +143,14 @@ set_wifi_dhcp () {
 
 set_wifi_static () {
 	mount_image
+
+	mkdir -p "$AIC_MNT"/etc/NetworkManager/system-connections
+	NMCONF=`cat lib/wifi-dhcp.tmpl | sed -e "s/TMPLSSID/$AIC_ARG2/g" -e "s/TMPLCRYPTO/$AIC_ARG3/g" -e "s/TMPLKEY/$AIC_ARG4/g" -e "s/TMPLIP/$AIC_ARG5/g" -e "s/TMPLMASK/$AIC_ARG6/g" -e "s/TMPLGW/$AIC_ARG7/g" -e "s/TMPLDNS/$AIC_ARG8/g" -e "s/TMPLSEARCH/$AIC_ARG9/g"`
+	echo $NMCONF > "$AIC_MNT"/etc/NetworkManager/system-connections/wifi
+	chmod 600 "$AIC_MNT"/etc/NetworkManager/system-connections/wifi
 	
+	echo "wifi network $AIC_ARG2 with ip $AIC_ARG5 active for image: $AIC_IMG"
+
 	unmount_image
 }
 

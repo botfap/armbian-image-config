@@ -8,7 +8,7 @@ sudo amrbian-image-config armbian-image.img module [options]
 ```
 
 ### Module List
-hostname,ethernet,wifi,apmode,user,log2ram,remote,skeleton,rootshell,help
+hostname,ethernet,wifi,apmode,user,log2ram,remote,template,rootshell,help
 
 ### Full Usage
 ```
@@ -40,13 +40,18 @@ amrbian-image-config armbian-image.img function [options]
         r|rdp
             e|enable
             d|disable
-    s|skeleton
-        archive.tgz
+    t|template
+        template.tgz
     x|rootshell
         chroot                    
     h|help
         print
 ```
+
+### Image Info
+Image file can be any stadard Armbian image. Either self built or downloaded
+
+Replace image name with keyword "template" to generate just the config files ready to make a template package
 
 ### Module Help and Examples
 #### hostname or n
@@ -85,10 +90,10 @@ Enable or disable remote access via ssh and rdp
 amrbian-image-config armbian-image.img remote ssh enable
 ```
 
-#### skeleton or s
-Inject a skeletal overlay filesystem into the image. Can be any files in a compressed tar archive which is extracted at root (/) on the image root file system
+#### template or t
+Inject a config template into the image. Can be any files in a compressed tar archive which is extracted at root (/) on the image root file system
 ```
-amrbian-image-config armbian-image.img skeleton myskel.tar.gz
+amrbian-image-config armbian-image.img template template.tgz
 ```
 #### rootshell or x
 Mount the image and start a chroot shell
@@ -103,12 +108,12 @@ Almost Started
 
 #### Module Progress
 - hostname - done
-- ethernet - dhcp complete, static #TODO
-- wifi - dhcp complete, static #TODO
+- ethernet - done, needs testing #TODO
+- wifi - done, needs testing #TODO
 - apmode #TODO
 - user #TODO
 - log2ram #TODO
-- skeleton #TODO
+- template #TODO
 - rootshell #TODO
 - help - started
 
