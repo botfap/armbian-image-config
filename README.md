@@ -1,16 +1,16 @@
-##Armbian Image Config Tool
+## Armbian Image Config Tool
 
 Tool to pre-configure basic system settings on Armbian images. Each module can be used independently on an image but using the same module twice will overwrite not combine any changes
 
-###Simple Usage
+### Simple Usage
 ```
 sudo amrbian-image-config armbian-image.img module [options]
 ```
 
-###Module List
+### Module List
 hostname,ethernet,wifi,apmode,user,log2ram,remote,skeleton,rootshell,help
 
-###Full Usage
+### Full Usage
 ```
 amrbian-image-config armbian-image.img function [options]
     n|hostname
@@ -48,60 +48,60 @@ amrbian-image-config armbian-image.img function [options]
         print
 ```
 
-###Module Help and Examples
-####hostname or n
+### Module Help and Examples
+#### hostname or n
 Sets the system hostname for the image
 ```
 amrbian-image-config armbian-image.img hostname myserver
 ```
-####ethernet or e
+#### ethernet or e
 Sets up ethernet networking for the first detected card for either DHCP or static IP addressing
 ```
 amrbian-image-config armbian-image.img ethernet static 192.168.1.10 255.255.255.0
 ```
-####wifi or w
+#### wifi or w
 Sets up wifi networking for the first detected card for either DHCP or static IP addressing
 ```
 amrbian-image-config armbian-image.img wifi dhcp wifiap wpa-psk mysecret
 ```
-####apmode or a
+#### apmode or a
 Sets up the first detected wifi card as a wifi access point
 ```
 amrbian-image-config armbian-image.img apmode apname wpa-psk mysecret
 ```
-####user or u
+#### user or u
 Sets the username and password of the primary system user
 ```
 amrbian-image-config armbian-image.img user myuser mypass
 ```
-####log2ram or l
+#### log2ram or l
 Enable or disable log2ram for troubleshooting startup issues
 ```
 amrbian-image-config armbian-image.img log2ram disable
 ```
-####remote or r
+#### remote or r
 Enable or disable remote access via ssh and rdp
 ```
 amrbian-image-config armbian-image.img remote ssh enable
 ```
 
-####skeleton or s
+#### skeleton or s
 Inject a skeletal overlay filesystem into the image. Can be any files in a compressed tar archive which is extracted at root (/) on the image root file system
 ```
 amrbian-image-config armbian-image.img skeleton myskel.tar.gz
 ```
-####rootshell or x
+#### rootshell or x
 Mount the image and start a chroot shell
 ```
 amrbian-image-config armbian-image.img rootshell
 ```
-####help
+#### help
 Prints usage help
 
-###Development Status
+### Development Status
 Almost Started
 
-####Module Progress
+#### Module Progress
 - hostname #TODO
 - ethernet #TODO
 - wifi #TODO
