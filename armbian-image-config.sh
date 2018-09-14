@@ -28,7 +28,7 @@ AIC_ARG8="$10"
 AIC_ARG9="$11"
 
 helpme () {
-	echo "amrbian-image-config armbian-image.img module [options]"
+	echo "armbian-image-config armbian-image.img module [options]"
 	echo "    n|hostname"
 	echo "        name"
 	echo "    e|ethernet"
