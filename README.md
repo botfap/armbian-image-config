@@ -102,9 +102,9 @@ Prints usage help
 Almost Started
 
 #### Module Progress
-- hostname #TODO
-- ethernet #TODO
-- wifi #TODO
+- hostname - done
+- ethernet - dhcp complete, static #TODO
+- wifi - dhcp complete, static #TODO
 - apmode #TODO
 - user #TODO
 - log2ram #TODO
@@ -113,7 +113,13 @@ Almost Started
 - help - started
 
 
+### License
+This software is licensed under the terms of the GNU General Public License version 2. This program is licensed "as is" without any warranty of any kind, whether express or implied.
+
+This file is a part of the Armbian Image Config Tool
+https://github.com/botfap/armbian-image-config/
+
 ***
-amrbian-image-config-0.1 Copyright (c) 2018 botfap, botfap@faphq.icu
+amrbian-image-config-0.1 - Copyright (c) 2018 botfap, botfap@faphq.icu
 
 
