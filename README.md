@@ -57,17 +57,38 @@ Replace image name with keyword "template" to generate just the config files rea
 #### hostname or n
 Sets the system hostname for the image
 ```
-armbian-image-config armbian-image.img hostname myserver
+armbian-image-config armbian-image.img h|hostname [hostname]
+    n|hostname
+        name
+
+armbian-image-config armbian-image.img h myserver"
 ```
 #### ethernet or e
 Sets up ethernet networking for the first detected card for either DHCP or static IP addressing
 ```
-armbian-image-config armbian-image.img ethernet static 192.168.1.10 255.255.255.0
+armbian-image-config armbian-image.img e|ethenet [dhcp|static] [options]
+    e|ethernet
+        d|dhcp
+        s|static
+            ipaddr mask [gw] [dns] [search]
+
+armbian-image-config armbian-image.img e d
+armbian-image-config armbian-image.img e s 10.0.0.50 255.255.255.0 10.0.0.254 9.9.9.9 mynet.lan
 ```
 #### wifi or w
 Sets up wifi networking for the first detected card for either DHCP or static IP addressing
 ```
-armbian-image-config armbian-image.img wifi dhcp wifiap wpa-psk mysecret
+armbian-image-config armbian-image.img w|wifi [dhcp|static] ssid crypto key [options]
+    w|wifi
+        d|dhcp
+            ssid crypto key
+        s|static
+            ssid crypto key ip mask [gw] [dns] [search]
+        s6|staticipv6
+            ssid crypto key ip6 mask6 [gw6] [dns6] [search]
+	
+armbian-image-config armbian-image.img w d MyWifiAP wpa-psk MySecret
+armbian-image-config armbian-image.img w s MyWifiAP wpa-psk MySecret 10.0.0.51 255.255.255.0 10.0.0.254 9.9.9.9 mynet.lan
 ```
 #### apmode or a
 Sets up the first detected wifi card as a wifi access point

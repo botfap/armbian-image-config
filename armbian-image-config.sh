@@ -28,13 +28,44 @@ AIC_ARG8="$10"
 AIC_ARG9="$11"
 
 helpme () {
+	echo "Armbian Image Config Tool - Ver. $AIC_VER"
 	echo "armbian-image-config armbian-image.img module [options]"
+	echo "modules:"
+	echo "    n|hostname"
+	echo "    e|ethernet"
+	echo "    w|wifi"
+	echo "    a|apmode"
+	echo "    u|user"
+	echo "    l|log2ram"
+	echo "    r|remote"
+	echo "    t|template"
+	echo "    x|rootshell"
+	echo "    h|help"
+	echo ""
+	echo "armbian-image-config help module for module specific help"
+}
+
+helpme_hostname () {
+	echo "armbian-image-config armbian-image.img h|hostname [hostname]"
 	echo "    n|hostname"
 	echo "        name"
+	echo ""
+	echo "e.g. armbian-image-config armbian-image.img h myserver"
+}
+
+helpme_ethernet () {
+	echo "armbian-image-config armbian-image.img e|ethenet [dhcp|static] [options]"
 	echo "    e|ethernet"
 	echo "        d|dhcp"
 	echo "        s|static"
 	echo "            ipaddr mask [gw] [dns] [search]"
+	echo ""
+	echo "e.g. armbian-image-config armbian-image.img e d"
+	echo "e.g. armbian-image-config armbian-image.img e s 10.0.0.50 255.255.255.0 10.0.0.254 9.9.9.9 mynet.lan"
+}
+
+helpme_wifi () {
+	echo "armbian-image-config armbian-image.img w|wifi [dhcp|static] ssid crypto key [options]"
 	echo "    w|wifi"
 	echo "        d|dhcp"
 	echo "            ssid crypto key"
@@ -42,26 +73,9 @@ helpme () {
 	echo "            ssid crypto key ip mask [gw] [dns] [search]"
 	echo "        s6|staticipv6"
 	echo "            ssid crypto key ip6 mask6 [gw6] [dns6] [search]"
-	echo "    a|apmode"
-	echo "            ssid crypto key"
-	echo "    u|user"
-	echo "        name password"
-	echo "    l|log2ram"
-	echo "        e|enable"
-	echo "        d|disable"
-	echo "    r|remote"
-	echo "        s|ssh"
-	echo "            e|enable"
-	echo "            d|disable"
-	echo "        r|rdp"
-	echo "            e|enable"
-	echo "            d|disable"
-	echo "    t|template"
-	echo "        template.tgz"
-	echo "    x|rootshell"
-	echo "        chroot"                    
-	echo "    h|help"
-	echo "        print"
+	echo ""
+	echo "e.g. armbian-image-config armbian-image.img w d MyWifiAP wpa-psk MySecret"
+	echo "e.g. armbian-image-config armbian-image.img w s MyWifiAP wpa-psk MySecret 10.0.0.51 255.255.255.0 10.0.0.254 9.9.9.9 mynet.lan"
 }
 
 todo () {
@@ -158,21 +172,37 @@ set_wifi_static () {
 
 case "$AIC_FUNC" in
     n|hostname)
-    	set_hostname
+    	if [ -n "$AIC_ARG1" ]; then
+    		set_hostname
+    	else
+    		helpme_hostname
+    	fi
         ;;
     e|ethernet)
-    	if [ "$AIC_ARG1" = "static" ] || [ "$AIC_ARG1" = "s" ]; then
-    		set_ethernet_static
-    	else
-    		set_ethernet_dhcp
-    	fi
+    	case "$AIC_ARG1" in
+    		s|static)
+				set_ethernet_static
+				;;
+			d|dhcp)
+				set_ethernet_dhcp
+				;;
+			*)
+				helpme_ethernet
+				;;
+ 		esac
     	;;
     w|wifi)
-    	if [ "$AIC_ARG1" = "static" ] || [ "$AIC_ARG1" = "s" ]; then
-    		set_wifi_static
-    	else
-    		set_wifi_dhcp
-    	fi
+    	case "$AIC_ARG1" in
+    		s|static)
+				set_wifi_static
+				;;
+			d|dhcp)
+				set_wifi_dhcp
+				;;
+			*)
+				helpme_wifi
+				;;
+ 		esac   		 
     	;;
     a|apmode)
     	todo
