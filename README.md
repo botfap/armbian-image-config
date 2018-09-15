@@ -8,7 +8,7 @@ sudo armbian-image-config armbian-image.img module [options]
 ```
 
 ### Module List
-hostname,ethernet,wifi,apmode,user,log2ram,remote,template,rootshell,help
+hostname,ethernet,wifi,user,log2ram,remote,template,rootshell,help
 
 ### Full Usage
 ```
@@ -26,8 +26,6 @@ armbian-image-config armbian-image.img function [options]
             ssid crypto key ip mask [gw] [dns] [search]
         s6|staticipv6
             ssid crypto key ip6 mask6 [gw6] [dns6] [search]
-    a|apmode
-            ssid crypto key
     u|user
         name password
     l|log2ram
@@ -89,11 +87,6 @@ armbian-image-config armbian-image.img w|wifi [dhcp|static] ssid crypto key [opt
 	
 armbian-image-config armbian-image.img w d MyWifiAP wpa-psk MySecret
 armbian-image-config armbian-image.img w s MyWifiAP wpa-psk MySecret 10.0.0.51 255.255.255.0 10.0.0.254 9.9.9.9 mynet.lan
-```
-#### apmode or a
-Sets up the first detected wifi card as a wifi access point
-```
-armbian-image-config armbian-image.img apmode apname wpa-psk mysecret
 ```
 #### user or u
 Sets the username and password of the primary system user

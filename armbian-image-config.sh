@@ -204,9 +204,6 @@ case "$AIC_FUNC" in
 				;;
  		esac   		 
     	;;
-    a|apmode)
-    	todo
-		;;
     u|user)
     	todo
 		;;
