@@ -1,4 +1,4 @@
-## Armbian Image Config Tool - Ver. 0.2
+## Armbian Image Config Tool - Ver. 0.3
 
 Tool to pre-configure basic system settings on Armbian images. Each module can be used independently on an image but using the same module twice will overwrite not combine any changes. This tool needs superuser permissions to mount and write to system files on disk images, you will need to run it with sudo or in a root shell
 
@@ -159,6 +159,6 @@ This file is a part of the Armbian Image Config Tool
 https://github.com/botfap/armbian-image-config/
 
 ***
-armbian-image-config-0.2 - Copyright (c) 2018 botfap, botfap@faphq.icu
+armbian-image-config-0.3 - Copyright (c) 2018 botfap, botfap@faphq.icu
 
 

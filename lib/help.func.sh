@@ -68,6 +68,27 @@ helpme_template () {
 	echo "        package|template.tgz"
 	echo ""
 	echo "e.g. armbian-image-config armbian-image.img t aic-template.tgz"
+	echo ""
+	echo "Create a template package of settings"
+	echo "armbian-image-config template n tvbox"
+	echo "armbian-image-config template w d MyWiFi wpa-psk MySecret"
+	echo "armbian-image-config template package"
+}
+
+helpme_user () {
+	echo "$AIC_ARG1 not yet implemented"
+}
+
+helpme_log2ram () {
+	echo "$AIC_ARG1 not yet implemented"
+}
+
+helpme_remote () {
+	echo "$AIC_ARG1 not yet implemented"
+}
+
+helpme_rootshell () {
+	echo "$AIC_ARG1 not yet implemented"
 }
 
 todo () {
